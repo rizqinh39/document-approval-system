@@ -4,35 +4,33 @@
 
 ---
 
-## 📸 Tampilan Antarmuka (Stitch Design Revamp)
+## 📸 Tampilan Antarmuka
 
-Berikut adalah antarmuka aplikasi yang telah dirancang presisi mengikuti **Design System dari Project Stitch (ID: `15261311708996724616`)**:
-
-### 1. 🔐 Portal Login & Autentikasi (`LoginView.vue`)
+### 1. 🔐 Portal Login & Autentikasi
 ![Portal Login](docs/screenshots/login_portal.png)
 *Tampilan split-screen modern portal pemerintah dengan indikator keamanan Qi Signature dan tombol Quick Demo Login.*
 
 ---
 
-### 2. 📊 Dashboard Pemohon & Grafik Analytics (`PemohonDashboard.vue`)
+### 2. 📊 Dashboard Pemohon & Grafik Analytics
 ![Dashboard Pemohon](docs/screenshots/dashboard_pemohon.png)
 *Dashboard Pemohon dilengkapi Bento Grid statistik, tabel filter permohonan, dan visualisasi ApexCharts (Tren Bulanan & Rasio Status).*
 
 ---
 
-### 3. 📝 Form Pengajuan Dokumen Kelayakan (`PermohonanForm.vue`)
+### 3. 📝 Form Pengajuan Dokumen Kelayakan
 ![Form Pengajuan](docs/screenshots/form_pengajuan.png)
 *Formulir pengajuan project dengan area drag-and-drop unggah berkas PDF/DOCX (Maksimal 50MB).*
 
 ---
 
-### 4. 👨‍⚖️ Antrean Penilaian Tim Penilai (`PenilaiDashboard.vue`)
+### 4. 👨‍⚖️ Antrean Penilaian Tim Penilai
 ![Antrean Penilai](docs/screenshots/daftar_penilai.png)
 *Antrean review permohonan masuk khusus role Penilai/Reviewer.*
 
 ---
 
-### 5. ⚖️ Modal Evaluasi & Keputusan Penilai (`ReviewModal.vue`)
+### 5. ⚖️ Modal Evaluasi & Keputusan Penilai
 ![Modal Penilaian](docs/screenshots/penilaian_modal.png)
 *Modal penetapan keputusan (Setujui / Revisi / Tolak) lengkap dengan pengisian catatan evaluasi wajib.*
 
@@ -137,6 +135,3 @@ Akses aplikasi di browser:
 - `POST /api/v1/penilaian/{id}/review` — Simpan keputusan (`approve`, `revision`, `reject`) + catatan evaluasi
 
 ---
-
-## 👨‍💻 Lisensi & Hak Cipta
-Diisi oleh kandidat pengembang sebagai bagian dari verifikasi dokumen uji teknis kelayakan (Technical Test Programmer 2026).
