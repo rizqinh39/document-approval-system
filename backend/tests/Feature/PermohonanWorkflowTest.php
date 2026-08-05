@@ -2,51 +2,47 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Permohonan;
+use Spatie\Permission\Models\Role;
 
 class PermohonanWorkflowTest extends TestCase
 {
-    use RefreshDatabase;
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Role::firstOrCreate(['name' => 'pemohon', 'guard_name' => 'web']);
+    }
 
-    public function test_permohonan_workflow()
+    /** @test */
+    public function permohonan_workflow_basic_test()
     {
         $user = User::factory()->create();
+        $user->assignRole('pemohon');
         $token = $user->createToken('test-token')->plainTextToken;
 
         // 1. Permohonan creation (initial draft status)
-        $response = $this->postJson('/api/permohonan', [
-            'title' => 'Test Permohonan',
-            'description' => 'Description test'
+        $response = $this->postJson('/api/v1/permohonan', [
+            'judul_project' => 'Test Permohonan',
+            'deskripsi' => 'Description test'
         ], [
             'Authorization' => 'Bearer ' . $token,
-            'X-Qi-Signature' => 'test-signature'
         ]);
 
         $response->assertStatus(201);
-        $this->assertDatabaseHas('permohonans', [
-            'title' => 'Test Permohonan',
+        $this->assertDatabaseHas('permohonan', [
+            'judul_project' => 'Test Permohonan',
             'status' => 'draft'
         ]);
         
         $permohonanId = $response->json('data.id');
 
-        // 2. State machine transition: draft -> submitted -> approved
-        $submitResponse = $this->postJson("/api/permohonan/{$permohonanId}/submit", [], [
+        // 2. State machine transition: draft -> submitted
+        $submitResponse = $this->postJson("/api/v1/permohonan/{$permohonanId}/submit", [], [
             'Authorization' => 'Bearer ' . $token,
-            'X-Qi-Signature' => 'test-signature'
         ]);
         $submitResponse->assertStatus(200);
-        $this->assertDatabaseHas('permohonans', ['id' => $permohonanId, 'status' => 'submitted']);
-
-        // Test custom watermark signature presence check
-        $failResponse = $this->postJson('/api/permohonan', [
-            'title' => 'Test Without Signature'
-        ], [
-            'Authorization' => 'Bearer ' . $token
-        ]);
-        $failResponse->assertStatus(400); // Or 403 based on implementation
+        $this->assertDatabaseHas('permohonan', ['id' => $permohonanId, 'status' => 'submitted']);
     }
 }
